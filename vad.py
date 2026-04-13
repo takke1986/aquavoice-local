@@ -20,47 +20,33 @@ HALLUCINATIONS: frozenset[str] = frozenset({
     "ご視聴ありがとうございました", "字幕",
 })
 
-# 許可するUnicodeブロック（日本語・英語・記号のみ）
-_ALLOWED_SCRIPTS = {"HIRAGANA", "KATAKANA", "CJK", "LATIN", "DIGIT", "PUNCTUATION", "SPACE"}
+import re
+
+# 日本語（ひらがな・カタカナ・漢字）・英数字・基本記号・空白のみ許可
+_FOREIGN_RE = re.compile(
+    r"[^\u3040-\u30FF"   # ひらがな・カタカナ
+    r"\u3400-\u9FFF"     # 漢字（CJK統合漢字）
+    r"\uF900-\uFAFF"     # CJK互換漢字
+    r"\uFF00-\uFFEF"     # 全角英数・記号
+    r"\u3000-\u303F"     # 日本語句読点
+    r"a-zA-Z0-9"         # 英数字
+    r"\s"                # 空白
+    r"!-~"               # 基本ASCII記号（! " # ... ~）
+    r"]",
+    re.UNICODE,
+)
 
 
-def _script(char: str) -> str:
-    """文字のUnicodeスクリプト種別を大まかに返す。"""
-    name = unicodedata.name(char, "")
-    if "HIRAGANA" in name:
-        return "HIRAGANA"
-    if "KATAKANA" in name:
-        return "KATAKANA"
-    if "CJK" in name:
-        return "CJK"
-    if "LATIN" in name:
-        return "LATIN"
-    cat = unicodedata.category(char)
-    if cat.startswith("N"):
-        return "DIGIT"
-    if cat.startswith("P") or cat.startswith("S"):
-        return "PUNCTUATION"
-    if cat.startswith("Z") or char in " \t\n":
-        return "SPACE"
-    return "OTHER"
-
-
-def _has_foreign_script(text: str, threshold: float = 0.3) -> bool:
-    """日本語・英語以外の文字が threshold 割以上なら True。"""
-    if not text:
-        return False
-    other = sum(1 for c in text if _script(c) == "OTHER")
-    return other / len(text) >= threshold
+def remove_foreign_scripts(text: str) -> str:
+    """アラビア語・ヘブライ語など日本語・英語以外の文字を除去する。"""
+    cleaned = _FOREIGN_RE.sub("", text).strip()
+    if cleaned != text.strip():
+        print(f"[VAD] 外国語文字を除去: {repr(text)} → {repr(cleaned)}")
+    return cleaned
 
 
 def is_hallucination(text: str) -> bool:
-    normalized = text.strip().lower()
-    if normalized in HALLUCINATIONS:
-        return True
-    if _has_foreign_script(normalized):
-        print(f"[VAD] 外国語スクリプト検出、スキップ: {repr(text)}")
-        return True
-    return False
+    return text.strip().lower() in HALLUCINATIONS
 
 
 class VADProcessor:

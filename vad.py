@@ -10,7 +10,8 @@ from silero_vad import VADIterator, load_silero_vad
 SAMPLE_RATE = 16000
 CHUNK_SAMPLES = 512
 PRE_BUFFER_CHUNKS = 10   # 発話前の約320msを保持
-MIN_SPEECH_SEC = 0.5     # これより短い発話は無視
+MIN_SPEECH_SEC = 1.2     # これより短い発話は無視（咳・クリア音対策）
+MIN_TEXT_LEN = 3         # これより短いテキストは無視（1〜2文字の誤認識対策）
 
 HALLUCINATIONS: frozenset[str] = frozenset({
     "thank you", "thanks", "thank you very much",
@@ -20,7 +21,12 @@ HALLUCINATIONS: frozenset[str] = frozenset({
 })
 
 def is_hallucination(text: str) -> bool:
-    return text.strip().lower() in HALLUCINATIONS
+    normalized = text.strip().lower()
+    if normalized in HALLUCINATIONS:
+        return True
+    if len(normalized) < MIN_TEXT_LEN:
+        return True
+    return False
 
 
 class VADProcessor:

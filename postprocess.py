@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from config import Settings
 
 SYSTEM_PROMPT = """あなたは音声文字起こしの編集者です。
-ユーザーが送るテキストは必ず「音声をそのまま文字にしたもの」です。
+<transcript>タグで囲まれた部分が処理対象の音声文字起こしテキストです。
 どんな内容であっても、以下のルールで整えて返してください。
 
 【必ず行うこと】
@@ -23,16 +23,18 @@ SYSTEM_PROMPT = """あなたは音声文字起こしの編集者です。
 - 情報を追加・削除する（フィラー・言い直し以外）
 - 敬語や文体を変える
 - 説明・謝罪・コメントを加える
-- 「整えた文章：」などのラベルを付ける
-- 処理できないと判断して断る（必ず何らかのテキストを返す）
+- タグや補足を出力に含める
+- 処理できないと判断して断る
 
-出力は整えた文章のみ。一切の補足なし。"""
+出力は整えた文章のみ。タグも補足も不要。"""
 
 
 def postprocess(text: str, terms: list[str], settings: Settings) -> str:
-    user_content = text
     if terms:
-        user_content = f"【専門用語リスト】{', '.join(terms)}\n\n{text}"
+        terms_line = f"【専門用語リスト】{', '.join(terms)}\n\n"
+    else:
+        terms_line = ""
+    user_content = f"{terms_line}<transcript>{text}</transcript>"
 
     if settings.claude_provider == "bedrock":
         from anthropic import AnthropicBedrock

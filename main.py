@@ -197,32 +197,7 @@ class AquaVoiceApp(rumps.App):
         subprocess.Popen([sys.executable, str(Path(__file__).parent / "claude_settings_ui.py")])
 
     def open_vad_settings(self, _sender) -> None:
-        response = rumps.Window(
-            title="マイク感度の調整",
-            message=(
-                f"現在の感度（VAD閾値）: {self.settings.vad_threshold}\n\n"
-                "0.3 = 敏感（小声も拾う）\n"
-                "0.5 = 標準\n"
-                "0.7 = 鈍感（はっきりした声のみ）\n\n"
-                "0.3〜0.9 の範囲で入力してください。"
-            ),
-            default_text=str(self.settings.vad_threshold),
-            ok="保存",
-            cancel="キャンセル",
-            dimensions=(200, 24),
-        ).run()
-        if not response.clicked:
-            return
-        try:
-            val = float(response.text.strip())
-            if not 0.1 <= val <= 0.95:
-                raise ValueError
-        except ValueError:
-            rumps.notification("AquaVoice Local", "", "0.1〜0.95 の数値を入力してください")
-            return
-        self.settings.vad_threshold = val
-        save_settings(self.settings)
-        rumps.notification("AquaVoice Local", "", f"VAD閾値を {val} に変更しました（次回録音から反映）")
+        subprocess.Popen([sys.executable, str(Path(__file__).parent / "vad_settings_ui.py")])
 
     def open_terms(self, _sender) -> None:
         subprocess.Popen([sys.executable, str(Path(__file__).parent / "terms_ui.py")])

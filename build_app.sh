@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-APP_NAME="AquaVoice Local"
+APP_NAME="KoeType"
 PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 BUNDLE="$PROJECT_DIR/$APP_NAME.app"
 MACOS="$BUNDLE/Contents/MacOS"
@@ -28,7 +28,7 @@ for UV_PATH in "\$HOME/.local/bin/uv" "/usr/local/bin/uv" "/opt/homebrew/bin/uv"
 done
 
 if [ -z "\${UV:-}" ]; then
-    osascript -e 'display alert "AquaVoice Local" message "uv が見つかりません。\nターミナルで以下を実行してください:\ncurl -LsSf https://astral.sh/uv/install.sh | sh"'
+    osascript -e 'display alert "KoeType" message "uv が見つかりません。\nターミナルで以下を実行してください:\ncurl -LsSf https://astral.sh/uv/install.sh | sh"'
     exit 1
 fi
 
@@ -48,11 +48,11 @@ cat > "$BUNDLE/Contents/Info.plist" << 'PLIST'
     <key>CFBundleExecutable</key>
     <string>AquaVoiceLocal</string>
     <key>CFBundleIdentifier</key>
-    <string>com.taketaka.aquavoice-local</string>
+    <string>com.taketaka.koetype</string>
     <key>CFBundleName</key>
-    <string>AquaVoice Local</string>
+    <string>KoeType</string>
     <key>CFBundleDisplayName</key>
-    <string>AquaVoice Local</string>
+    <string>KoeType</string>
     <key>CFBundleVersion</key>
     <string>1.0.0</string>
     <key>CFBundleShortVersionString</key>
@@ -80,12 +80,12 @@ echo "【次のステップ】"
 echo "  1. アプリを Applications にコピー:"
 echo "     cp -r \"$BUNDLE\" /Applications/"
 echo ""
-echo "  2. /Applications/AquaVoice Local.app をダブルクリックして起動"
+echo "  2. /Applications/KoeType.app をダブルクリックして起動"
 echo ""
 echo "  3. システム設定 → プライバシーとセキュリティ で以下を許可:"
-echo "     - アクセシビリティ  → AquaVoice Local"
-echo "     - 入力監視          → AquaVoice Local"
-echo "     - マイク            → AquaVoice Local"
+echo "     - アクセシビリティ  → KoeType"
+echo "     - 入力監視          → KoeType"
+echo "     - マイク            → KoeType"
 echo ""
-echo "  4. Terminal ではなく AquaVoice Local として権限を付与するため"
+echo "  4. Terminal ではなく KoeType として権限を付与するため"
 echo "     Terminal の権限は削除しても OK です"

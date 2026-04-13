@@ -1,5 +1,5 @@
 """
-AquaVoice Local — メニューバー常駐の音声文字起こしアプリ
+KoeType — メニューバー常駐の音声文字起こしアプリ
 
 ホットキー: ⌘+Shift+Space で録音ON/OFF
 結果はカーソル位置にそのまま貼り付け
@@ -185,7 +185,7 @@ class AquaVoiceApp(rumps.App):
                     dimensions=(400, 24),
                 ).run()
                 if not response.clicked or not response.text.strip().startswith("sk-"):
-                    rumps.notification("AquaVoice Local", "", "APIキーが未設定のため Claude後処理をONにできません")
+                    rumps.notification("KoeType", "", "APIキーが未設定のため Claude後処理をONにできません")
                     return
                 self.settings.anthropic_api_key = response.text.strip()
 

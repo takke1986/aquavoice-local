@@ -13,7 +13,7 @@ from config import load_terms, save_terms
 
 def main() -> None:
     root = tk.Tk()
-    root.title("専門用語登録 — AquaVoice Local")
+    root.title("専門用語登録 — KoeType")
     root.geometry("560x460")
     root.resizable(True, True)
 

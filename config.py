@@ -1,10 +1,10 @@
-"""設定・専門用語の読み書き。~/.aquavoice/ に保存する。"""
+"""設定・専門用語の読み書き。~/.koetype/ に保存する。"""
 
 import json
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
-CONFIG_DIR = Path.home() / ".aquavoice"
+CONFIG_DIR = Path.home() / ".koetype"
 SETTINGS_FILE = CONFIG_DIR / "settings.json"
 TERMS_FILE = CONFIG_DIR / "terms.json"
 

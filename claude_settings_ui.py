@@ -15,7 +15,7 @@ def main() -> None:
     settings = load_settings()
 
     root = tk.Tk()
-    root.title("Claude後処理の設定 — AquaVoice Local")
+    root.title("Claude後処理の設定 — KoeType")
     root.geometry("480x320")
     root.resizable(False, False)
 
@@ -100,7 +100,7 @@ def main() -> None:
                 return
 
         save_settings(settings)
-        messagebox.showinfo("保存完了", "設定を保存しました。\nAquaVoice Local を再起動すると反映されます。", parent=root)
+        messagebox.showinfo("保存完了", "設定を保存しました。\nKoeType を再起動すると反映されます。", parent=root)
         root.destroy()
 
     btn_frame = ttk.Frame(root, padding=(12, 8, 12, 12))

@@ -14,7 +14,7 @@ def main() -> None:
     settings = load_settings()
 
     root = tk.Tk()
-    root.title("マイク感度の調整 — AquaVoice Local")
+    root.title("マイク感度の調整 — KoeType")
     root.geometry("400x260")
     root.resizable(False, False)
 

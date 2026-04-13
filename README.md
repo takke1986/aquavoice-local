@@ -1,4 +1,4 @@
-# AquaVoice Local
+# KoeType
 
 macOS用のローカル音声文字起こしアプリ。音声データは外部に送信されません。
 
@@ -49,10 +49,10 @@ uv run hf auth login
 
 ```bash
 bash build_app.sh
-cp -r "AquaVoice Local.app" /Applications/
+cp -r "KoeType.app" /Applications/
 ```
 
-`/Applications/AquaVoice Local.app` をダブルクリックで起動。
+`/Applications/KoeType.app` をダブルクリックで起動。
 
 ### 5. macOS 権限を付与（初回のみ）
 
@@ -60,9 +60,9 @@ cp -r "AquaVoice Local.app" /Applications/
 
 | 権限 | 対象 |
 |---|---|
-| マイク | AquaVoice Local |
-| アクセシビリティ | AquaVoice Local |
-| 入力監視 | AquaVoice Local |
+| マイク | KoeType |
+| アクセシビリティ | KoeType |
+| 入力監視 | KoeType |
 
 ## 使い方
 
@@ -87,7 +87,7 @@ cp -r "AquaVoice Local.app" /Applications/
 句読点の自動追加や文法整形を行う場合：
 
 1. メニューバー → **Claude後処理** をON
-2. `~/.aquavoice/settings.json` を編集:
+2. `~/.koetype/settings.json` を編集:
 
 ```json
 {
@@ -98,10 +98,10 @@ cp -r "AquaVoice Local.app" /Applications/
 
 ## 設定ファイル
 
-設定・単語辞書は `~/.aquavoice/` に保存されます。
+設定・単語辞書は `~/.koetype/` に保存されます。
 
 ```
-~/.aquavoice/
+~/.koetype/
 ├── settings.json   # アプリ設定
 └── terms.json      # 専門用語辞書
 ```

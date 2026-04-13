@@ -16,7 +16,7 @@ class Settings:
     claude_provider: str = "anthropic"  # "anthropic" or "bedrock"
     aws_region: str = "us-east-1"
     bedrock_model_id: str = "us.anthropic.claude-haiku-4-5-20251001-v1:0"
-    vad_threshold: float = 0.5
+    vad_threshold: float = 0.7
     min_silence_ms: int = 800
 
 
